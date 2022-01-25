@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "xbCategories"
-  spec.version      = "0.0.3"
+  spec.version      = "0.0.4"
 
   spec.summary      = "一个常用分类库"
 
