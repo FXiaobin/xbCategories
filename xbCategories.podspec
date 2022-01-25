@@ -20,7 +20,7 @@ Pod::Spec.new do |spec|
 
   spec.summary      = "一个常用分类库"
 
-  s.swift_version = "5.0"
+  spec.swift_version = "5.0"
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
