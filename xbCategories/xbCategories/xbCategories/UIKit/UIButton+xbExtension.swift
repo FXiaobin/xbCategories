@@ -11,6 +11,33 @@ private var xb_touchAreaEdgeInsets: UIEdgeInsets = .zero
 
 extension UIButton {
     
+    // MARK:  按钮点击去掉过渡效果处理
+    
+    /** 按钮标题 - 按钮点击去掉过渡效果处理*/
+    func set(title: String? ,selectedTitle: String?) {
+        self.setTitle(title, for: .normal)
+        self.setTitle(title, for: .highlighted)
+        self.setTitle(selectedTitle, for: .selected)
+        self.setTitle(selectedTitle, for: [.selected, .highlighted])
+    }
+    
+    /** 按钮标题颜色 - 按钮点击去掉过渡效果处理*/
+    func set(titleColor: UIColor? ,selectedTitleColor: UIColor?) {
+        self.setTitleColor(titleColor, for: .normal)
+        self.setTitleColor(titleColor, for: .highlighted)
+        self.setTitleColor(selectedTitleColor, for: .selected)
+        self.setTitleColor(selectedTitleColor, for: [.selected, .highlighted])
+    }
+    
+    /** 按钮图片 - 按钮点击去掉过渡效果处理*/
+    func set(image: String? ,selectedImage: String?){
+        self.setImage(UIImage(named: image ?? ""), for: .normal)
+        self.setImage(UIImage(named: image ?? ""), for: .highlighted)
+        self.setImage(UIImage(named: selectedImage ?? ""), for: .selected)
+        self.setImage(UIImage(named: selectedImage ?? ""), for: [.selected, .highlighted])
+    }
+    
+    
     
     /// Increase your button touch area.
     /// If your button frame is (0,0,40,40). Then call button.ts_touchInsets = UIEdgeInsetsMake(-30, -30, -30, -30), it will Increase the touch area

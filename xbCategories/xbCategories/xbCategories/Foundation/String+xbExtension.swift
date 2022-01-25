@@ -69,6 +69,18 @@ extension String{
     }
     
     
+    // MARK: 图片转base64字符串互转
+    
+    /** 当前字符串为base64字符串时，base64字符串转图片*/
+    func xb_base64ToImage() -> UIImage? {
+        if let data = Data(base64Encoded: self) {
+            let image = UIImage(data: data)
+            return image
+        }
+        return nil
+    }
+    
+    
     // MARK: 常用加密
     
     // MARK: URL编码、解码
@@ -220,35 +232,22 @@ extension String{
     }
     
     
+    // 字符串转日期
     
-    
-    // MARK: 日期转换
-    
-    
-    /** 日期转字符串*/
-    static func xb_string(withDate: Date, dateFormat: String = "yyyy-MM-dd HH:mm:ss") -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = dateFormat
-        let str = formatter.string(from: withDate)
-        
-        return str
-    }
-    
-    /** 获取当前时间戳（单位：秒）*/
-    static func xb_timeInterval() -> TimeInterval{
+    /** 字符串转时间戳*/
+    var xb_timeInterval: TimeInterval {
+        if let date: Date = xb_date() {
+            return date.timeIntervalSince1970
+        }
         return Date().timeIntervalSince1970
     }
     
-    /** 获取某个日期对应的时间戳（单位：秒）*/
-    static func xb_timeInterval(withDate: Date = Date()) -> TimeInterval{
-        return withDate.timeIntervalSince1970
-    }
-    
-    /** 时间戳转字符串*/
-    static func xb_string(withTimeInterval: TimeInterval, dateFormat: String = "yyyy-MM-dd HH:mm:ss") -> String{
-        let date: Date = Date(timeIntervalSince1970: withTimeInterval)
-        let str = xb_string(withDate: date, dateFormat: dateFormat)
-        
+    /** 将年月日时分秒的字符串 -> 年月日字符串*/
+    func xb_getYMD(withYMDHMS: String) -> String {
+        var str = withYMDHMS
+        if withYMDHMS.count > 10 {
+            str = String(withYMDHMS.prefix(10))
+        }
         return str
     }
     
@@ -266,6 +265,20 @@ extension String{
         return date
     }
     
+    // MARK: 常用属性字符串处理
+    
+    /** 计算字符串高度*/
+    func xb_textHeight(attributes: [NSAttributedString.Key : Any], limitWidth: CGFloat) -> CGFloat{
+        let size = xb_textSize(attributes: attributes, limitWidth: limitWidth)
+        // 取整 ： 大于或等于参数的最近的整数
+        return ceil(size.height)
+    }
+    
+    func xb_textSize(attributes: [NSAttributedString.Key : Any], limitWidth: CGFloat) -> CGSize{
+        let rect = self.boundingRect(with: CGSize(width: limitWidth, height: 1000), options: [.usesLineFragmentOrigin, .truncatesLastVisibleLine, .usesFontLeading], attributes: attributes, context: nil)
+        
+        return rect.size
+    }
     
     // MARK: 去掉空格
     
@@ -527,3 +540,67 @@ extension String {
     
 }
 
+extension NSAttributedString {
+    
+    /** 计算属性字符串高度*/
+    func xb_textHeight(limitWidth: CGFloat) -> CGFloat{
+        let size = xb_textSize(limitWidth: limitWidth)
+        // 取整 ： 大于或等于参数的最近的整数
+        return ceil(size.height)
+    }
+    
+    func xb_textSize(limitWidth: CGFloat) -> CGSize{
+        let rect = self.boundingRect(with: CGSize(width: limitWidth, height: 1000), options: [.usesLineFragmentOrigin, .truncatesLastVisibleLine, .usesFontLeading], context: nil)
+        
+        return rect.size
+    }
+    
+    /** 获取行间距属性字符串*/
+    static func xb_paragraphStyle(withString: String ,lineSpacing: CGFloat, alignment: NSTextAlignment) -> NSMutableAttributedString {
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = lineSpacing
+        paragraphStyle.alignment = alignment
+        
+        let attributedText: NSMutableAttributedString = NSMutableAttributedString(string: withString, attributes: [ NSAttributedString.Key.paragraphStyle : paragraphStyle])
+        
+        return attributedText
+    }
+   
+    /** 获取行间距属性字符串*/
+    static func xb_paragraphStyle(withString: String ,lineSpacing: CGFloat, fontSize: CGFloat, alignment: NSTextAlignment) -> NSMutableAttributedString {
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = lineSpacing
+        paragraphStyle.alignment = alignment
+        
+        let attributedText: NSMutableAttributedString = NSMutableAttributedString(string: withString, attributes: [NSAttributedString.Key.paragraphStyle : paragraphStyle, NSMutableAttributedString.Key.font : UIFont.systemFont(ofSize: fontSize)])
+        
+        return attributedText
+    }
+    
+    /** 获取某个范围的属性字符串*/
+    static func xb_attributedString(withString: String ,color: UIColor, font: UIFont, range: NSRange) -> NSMutableAttributedString {
+       
+        let attributedText: NSMutableAttributedString = NSMutableAttributedString(string: withString)
+        attributedText.addAttributes([ NSAttributedString.Key.foregroundColor : color, NSAttributedString.Key.font : font], range: range)
+        
+        
+        return attributedText
+    }
+    
+    /** 获取某个keyword字符串的属性字符串*/
+    static func xb_attributedString(withString: String, keyword: String ,color: UIColor, font: UIFont) -> NSMutableAttributedString {
+        
+        let str = withString as NSString
+        let range: NSRange = str.range(of: keyword)
+        
+        let attributedText: NSMutableAttributedString = NSMutableAttributedString(string: withString)
+        if range.location != NSNotFound {
+            attributedText.addAttributes([ NSAttributedString.Key.foregroundColor : color, NSAttributedString.Key.font : font], range: range)
+        }
+       
+        return attributedText
+    }
+    
+}

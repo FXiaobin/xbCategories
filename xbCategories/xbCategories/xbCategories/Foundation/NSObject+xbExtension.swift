@@ -55,6 +55,36 @@ public extension NSObject {
        
         return object
     }
+    
+    
+    
+    /** 读取本地文件*/
+    static func xb_readLoacalPathData(forResource: String?, ofType: String?) -> Data?{
+        guard let resource = forResource else {
+            return nil
+        }
+        
+        let path = Bundle.main.path(forResource: resource, ofType: ofType)
+        let url = URL(fileURLWithPath: path!)
+        
+        // 带throws的方法需要抛异常
+        do {
+              /*
+                 * try 和 try! 的区别
+                 * try 发生异常会跳到catch代码中
+                 * try! 发生异常程序会直接crash
+                 */
+            //let data = try Data(contentsOf: url)
+            let data: Data? = try Data(contentsOf: url, options: [])
+   
+            return data
+            
+        } catch let error as Error? {
+            debugPrint("读取本地数据出现错误!",error as Any)
+            return nil
+        }
+        
+    }
 
     
 }

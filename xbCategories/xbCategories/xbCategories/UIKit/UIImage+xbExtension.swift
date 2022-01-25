@@ -10,6 +10,16 @@ import UIKit
 extension UIImage{
     
     
+    /** 将图片转base64字符串*/
+    func xb_imageToBase64() -> String {
+        if let data: Data = self.jpegData(compressionQuality: 0.5) {
+            let base64 = data.base64EncodedString()
+            return base64
+        }
+        return ""
+    }
+    
+    
     // MARK: 暗黑模式适配 深色图片和浅色图片切换
     
     static func xb_dynamicImage(lightImgName: String?, darkImgName: String?) -> UIImage? {
