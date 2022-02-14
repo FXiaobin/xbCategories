@@ -7,17 +7,17 @@
 
 import UIKit
 
-extension Date {
+public extension Date {
     
     // MARK: 日期转换
     
     /** 日期转时间戳（单位：秒）*/
-    public var xb_timeInterva: TimeInterval {
+    var xb_timeInterva: TimeInterval {
         return self.timeIntervalSince1970
     }
     
     /** 日期转字符串*/
-    public func xb_dateString(withDateFormat: String = "yyyy-MM-dd HH:mm:ss") -> String {
+    func xb_dateString(withDateFormat: String = "yyyy-MM-dd HH:mm:ss") -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = withDateFormat
         let str = formatter.string(from: self)

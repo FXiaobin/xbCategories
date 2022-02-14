@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UIBarButtonItem {
+public extension UIBarButtonItem {
     
     // 站位间距 UIBarButtonItem 要用Items的属性
     static func xb_fixedSpace(withWidth: CGFloat = 10.0) -> UIBarButtonItem{

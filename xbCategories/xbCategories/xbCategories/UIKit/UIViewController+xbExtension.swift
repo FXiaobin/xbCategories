@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UIViewController{
+public extension UIViewController{
     
     /** 全局控制滚动视图自适应问题*/
     func xb_scrollViewAdjustConfig() {

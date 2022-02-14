@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension String{
+public extension String{
     
     /** 是否是空字符串*/
     var xb_isEmpty: Bool {

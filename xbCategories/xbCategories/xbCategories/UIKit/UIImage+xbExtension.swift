@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UIImage{
+public extension UIImage{
     
     
     /** 将图片转base64字符串*/

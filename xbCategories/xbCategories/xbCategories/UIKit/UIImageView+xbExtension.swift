@@ -7,10 +7,10 @@
 
 import UIKit
 
-extension UIImageView {
+public extension UIImageView {
   
     //MARK:工程内gif
-    public func xb_setGifWithImageName(name: String){
+    func xb_setGifWithImageName(name: String){
         guard let path = Bundle.main.path(forResource: name, ofType: "gif") else {
             print("SwiftGif: Source for the image does not exist")
             return
@@ -20,7 +20,7 @@ extension UIImageView {
     
     //MARK:实现gif动图效果的原理
     
-    public func xb_startGifWithFilePath(filePath:String) {
+    func xb_startGifWithFilePath(filePath:String) {
         //1.加载GIF图片，并转化为data类型
         guard let data = NSData(contentsOfFile: filePath) else {return}
         //2.从data中读取数据，转换为CGImageSource
@@ -55,7 +55,7 @@ extension UIImageView {
         
     }
 
-    public func xb_imageStopAnimating() {
+    func xb_imageStopAnimating() {
         self.stopAnimating()
     }
  

@@ -9,7 +9,7 @@ import UIKit
 
 private var xb_touchAreaEdgeInsets: UIEdgeInsets = .zero
 
-extension UIButton {
+public extension UIButton {
     
     // MARK:  按钮点击去掉过渡效果处理
     
@@ -42,7 +42,7 @@ extension UIButton {
     /// Increase your button touch area.
     /// If your button frame is (0,0,40,40). Then call button.ts_touchInsets = UIEdgeInsetsMake(-30, -30, -30, -30), it will Increase the touch area
     /// 1. 扩大按钮点击范围 负数为扩大范围，证书为缩小范围
-    public var xb_touchInsets: UIEdgeInsets {
+    var xb_touchInsets: UIEdgeInsets {
         get {
             if let value = objc_getAssociatedObject(self, &xb_touchAreaEdgeInsets) as? NSValue {
                 var edgeInsets: UIEdgeInsets = .zero
@@ -61,7 +61,7 @@ extension UIButton {
     }
 
     
-    open override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         if self.xb_touchInsets == .zero || !self.isEnabled || self.isHidden || !self.isUserInteractionEnabled {
             return super.point(inside: point, with: event)
         }
